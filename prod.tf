@@ -21,7 +21,7 @@ resource "aws_default_subnet" "default_az1" {
 }
 
 resource "aws_default_subnet" "default_az2" {
-  availability_zone = "us-west-2a"
+  availability_zone = "us-west-2b"
   tags = {
     "Teraform" : "true"
   }  
@@ -104,3 +104,34 @@ resource "aws_elb" "prod_web" {
     "Teraform" : "true"
   }    
 }
+
+resource "aws_launch_template" "prod_web" {
+  name_prefix   = "prod-web"
+  image_id      = "ami-479b843e"
+  instance_type = "t2.micro"
+  tags = {
+    "Teraform" : "true"
+  }  
+}
+
+# resource "aws_autoscaling_group" "prod_web" {
+#   vpc_zone_identifier = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
+#   desired_capacity  = 1
+#   max_size          = 1
+#   min_size          = 1
+
+#   launch_template {
+#     id      = aws_launch_template.prod_web.id
+#     version = "$Latest"
+#   }
+#     tag {
+#       key                 = "Teraform"
+#       value               = "true"
+#       propagate_at_launch = true
+#   }
+# }
+
+# resource "aws_autoscaling_attachment" "prod_web" {
+#   autoscaling_group_name = aws_autoscaling_group.prod_web.id
+#   elb                        = aws_elb.prod_web.id
+# }
