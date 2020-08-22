@@ -20,6 +20,7 @@ resource "aws_launch_template" "this" {
   name_prefix   = "${var.web_app}-web"
   image_id      = var.web_image_id
   instance_type = var.web_instance_type
+  key_name      = "Terraform-Course"
   tags = {
     "Teraform" : "true"
   }  
